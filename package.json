@@ -1,0 +1,17 @@
+{
+  "name": "museum_api",
+  "version": "1.0.0",
+  "description": "Museum catalog backend API",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server",
+    "start": "NODE_ENV=production node server"
+  },
+  "keywords": [],
+  "author": "Kszꓘ",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
+  }
+}

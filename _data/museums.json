@@ -1,0 +1,42 @@
+[
+  {
+    "_id": "5d713995b721c3bb38c1f5d0",
+    "user": "5d7a514b5d2c12c7449be045",
+    "name": "Muzeum Sportu i Turystyki",
+    "description": "Muzeum jest jedną z najstarszych tego typu placówek w Europie, działa nieprzerwanie od 1952. Dawniej mieściło się przy stadionie warszawskiej Skry przy ul. Wawelskiej 5. Obecnie mieści się w nowoczesnym Centrum Olimpijskim. Zgromadzone zbiory obejmują ponad 46 tys. eksponatów, głównie trofeów sportowych (medali , pucharów, dyplomów) oraz proporczyków, sztandarów itp., a także strojów i sprzętu sportowego. Elementem dodatkowym jest bogaty zbiór książek, zdjęć, czasopism, pocztówek, jak również materiałów audio i wideo.",
+    "website": "https://www.muzeumsportu.waw.pl",
+    "phone": "+48 22 56 03 786",
+    "email": "muzsport@muzeumsportu.waw.pl",
+    "address": "Wybrzeże Gdyńskie 4 St., 01-531 Warszawa, Polska"
+  },
+  {
+    "_id": "5d713a66ec8f2b88b8f830b8",
+    "user": "5d7a514b5d2c12c7449be046",
+    "name": "Muzeum Polskiej Techniki Wojskowej",
+    "description": "Dzięki porozumieniu zawartemu z Polskim Holdingiem Obronnym sp. z o.o. udało się uratować część powojennej historii polskiego przemysłu obronnego. Do muzeum trafiły elementy z wyposażenia biura konstrukcyjnego i linii produkcyjnej zlikwidowanych Zakładów PZL Wola w Warszawie. Wszystkim osobom zaangażowanym w ten projekt serdecznie dziękujemy.",
+    "website": "https://muzeumptw.pl/",
+    "phone": "+48 22 842 66 11",
+    "email": "mptwfort@muzeumwp.pl",
+    "address": "Powsińska 13 St., 02-920 Warszawa, Polska"
+  },
+  {
+    "_id": "5d725a037b292f5f8ceff787",
+    "user": "5c8a1d5b0190b214360dc031",
+    "name": "Muzeum Narodowe w Krakowie",
+    "description": "Muzeum Narodowe w Krakowie jest najstarszym i największym muzeum z przymiotnikiem 'narodowe' w nazwie w Polsce. Zostało powołane do życia w 1879 r. uchwałą Rady Miasta Krakowa. Do końca I wojny światowej było jedynym wielkim dostępnym dla publiczności muzeum na ziemiach polskich i do dziś pozostaje placówką o największej liczbie kolekcji, budynków i stałych galerii. Zbiory, nad którymi pieczę sprawuje Muzeum liczą ponad 900 tysięcy eksponatów, a jego misją jest upowszechnianie sztuki polskiej i zagranicznej.",
+    "website": "https://mnk.pl/",
+    "phone": "+48 12 433 57 44",
+    "email": "rezerwacja@mnk.pl ",
+    "address": "Al. 3 Maja 1, 30-062 Kraków, Polska"
+  },
+  {
+    "_id": "5d725a1b7b292f5f8ceff788",
+    "user": "5c8a1d5b0190b214360dc032",
+    "name": "Muzeum Narodowe w Poznaniu",
+    "description": "Muzeum Narodowe w Poznaniu ma 150 lat. Należy do najstarszych, największych i najważniejszych muzeów w Polsce. W swoich różnorodnych, przebogatych zbiorach przechowuje i udostępnia dziedzictwo wieków i pokoleń, wiedzy, trudu i pasji ludzi zbiory te gromadzących, a pośród nich – „klejnoty”, godne każdej światowej galerii. Stworzone w różnych wiekach i czasach czekają na odwiedzającego muzeum, gotowe dziś, właśnie jemu dostarczyć osobistego, niezastąpionego doświadczenia.",
+    "website": "https://mnp.art.pl/",
+    "phone": "+48 61 85 68 000",
+    "email": "mnp@mnp.art.pl",
+    "address": "Aleje Marcinkowskiego 9,61-745 Poznań,Polska"
+  }
+]
