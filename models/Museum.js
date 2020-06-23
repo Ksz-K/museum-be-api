@@ -13,7 +13,7 @@ const MuseumSchema = new mongoose.Schema({
     type: String,
     required: [true, "Proszę podać opis"],
     trim: true,
-    maxlength: [500, "Opis nie może przekroczyć 500 znaków"],
+    maxlength: [1500, "Opis nie może przekroczyć 1500 znaków"],
   },
   website: {
     type: String,

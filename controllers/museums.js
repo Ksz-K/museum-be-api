@@ -1,3 +1,5 @@
+const Museum = require("../models/Museum");
+
 // @desc    Get all museums
 // @route   GET /api/v1/museums
 // @access  Public
@@ -15,8 +17,13 @@ exports.getMuseum = (req, res, next) => {
 // @desc    Create museum
 // @route   POST /api/v1/museums/
 // @access  Private
-exports.createMuseum = (req, res, next) => {
-  res.status(200).json({ success: true, msg: "Create a new museum" });
+exports.createMuseum = async (req, res, next) => {
+  try {
+    const museum = await Museum.create(req.body);
+    res.status(201).json({ success: true, data: museum });
+  } catch (err) {
+    res.status(400).json({ success: false, message: err });
+  }
 };
 
 // @desc    Update museum by its ID
