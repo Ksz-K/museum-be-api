@@ -13,6 +13,7 @@ connectDB();
 
 //Route files
 const museums = require("./routes/museums");
+const expositions = require("./routes/expositions");
 
 const app = express();
 
@@ -26,6 +27,7 @@ if (process.env.NODE_ENV === "development") {
 
 //Mount routers
 app.use("/api/v1/museums", museums);
+app.use("/api/v1/expositions", expositions);
 
 app.use(errorHandler);
 

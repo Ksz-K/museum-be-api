@@ -8,7 +8,13 @@ const {
   getMuseumsInRadius,
 } = require("../controllers/museums");
 
+//Include other resource routers
+const expositionRouter = require("./expositions");
+
 const router = express.Router();
+
+//Re-route into other resource routers
+router.use("/:museumId/expositions", expositionRouter);
 
 router.route("/radius/:coordinates/:distance").get(getMuseumsInRadius);
 
