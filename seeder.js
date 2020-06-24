@@ -8,6 +8,7 @@ dotenv.config({ path: "./config/config.env" });
 
 //Load models
 const Museum = require("./models/Museum");
+const Exposition = require("./models/Exposition");
 
 //Connect to DB
 mongoose.connect(process.env.MONGO_URI, {
@@ -22,10 +23,15 @@ const museums = JSON.parse(
   fs.readFileSync(`${__dirname}/_data/museums.json`, "utf-8")
 );
 
+const expositions = JSON.parse(
+  fs.readFileSync(`${__dirname}/_data/expositions.json`, "utf-8")
+);
+
 //Import into DB
 const importData = async () => {
   try {
     await Museum.create(museums);
+    await Exposition.create(expositions);
 
     console.log("Data imported...".green.inverse);
     process.exit();
@@ -38,6 +44,7 @@ const importData = async () => {
 const deleteData = async () => {
   try {
     await Museum.deleteMany();
+    await Exposition.deleteMany();
 
     console.log("Data deleted...".red.bold);
     process.exit();
