@@ -9,23 +9,16 @@ const Museum = require("../models/Museum");
 // @access  Public
 
 exports.getExpositions = asyncHandler(async (req, res, next) => {
-  let query;
   if (req.params.museumId) {
-    query = Exposition.find({ museum: req.params.museumId });
-  } else {
-    query = Exposition.find().populate({
-      path: "museum",
-      select: "name description",
+    const expositions = await Exposition.find({ museum: req.params.museumId });
+    return res.status(200).json({
+      success: true,
+      count: expositions.length,
+      data: expositions,
     });
+  } else {
+    res.status(200).json(res.advancedResults);
   }
-
-  const expositions = await query;
-
-  res.status(200).json({
-    succes: true,
-    count: expositions.length,
-    data: expositions,
-  });
 });
 
 // @desc    Get single exposition
@@ -33,9 +26,7 @@ exports.getExpositions = asyncHandler(async (req, res, next) => {
 // @access  Public
 
 exports.getExposition = asyncHandler(async (req, res, next) => {
-  const exposition = await Exposition.findById(req.params.id).populate(
-    "museum"
-  );
+  const exposition = await Exposition.findById(req.params.id);
 
   if (!exposition) {
     return next(

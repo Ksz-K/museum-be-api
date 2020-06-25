@@ -9,6 +9,9 @@ const {
   museumPhotoUpload,
 } = require("../controllers/museums");
 
+const Museum = require("../models/Museum");
+const advancedResults = require("../middleware/advancedResults");
+
 //Include other resource routers
 const expositionRouter = require("./expositions");
 
@@ -21,7 +24,10 @@ router.route("/radius/:coordinates/:distance").get(getMuseumsInRadius);
 
 router.route("/:id/photo").put(museumPhotoUpload);
 
-router.route("/").get(getMuseums).post(createMuseum);
+router
+  .route("/")
+  .get(advancedResults(Museum, "expositions"), getMuseums)
+  .post(createMuseum);
 
 router.route("/:id").get(getMuseum).put(updateMuseum).delete(deleteMuseum);
 
