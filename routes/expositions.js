@@ -24,4 +24,5 @@ router
   .get(getExposition)
   .put(updateExposition)
   .delete(deleteExposition);
+
 module.exports = router;
