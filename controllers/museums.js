@@ -27,7 +27,7 @@ exports.getMuseums = asyncHandler(async (req, res, next) => {
   );
 
   //Finding resource
-  query = Museum.find(JSON.parse(queryStr));
+  query = Museum.find(JSON.parse(queryStr)).populate("expositions"); //all fields OR {path:expositions,select:Y}
 
   //Select fields
   if (req.query.select) {
@@ -124,7 +124,7 @@ exports.updateMuseum = asyncHandler(async (req, res, next) => {
 // @route   DELETE /api/v1/museums/:id
 // @access  Private
 exports.deleteMuseum = asyncHandler(async (req, res, next) => {
-  const museum = await Museum.findByIdAndRemove(req.params.id);
+  const museum = await Museum.findById(req.params.id);
 
   if (!museum) {
     return next(
@@ -134,7 +134,7 @@ exports.deleteMuseum = asyncHandler(async (req, res, next) => {
       )
     );
   }
-
+  museum.remove();
   res.status(200).json({ success: true, data: museum });
 });
 

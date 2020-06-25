@@ -70,6 +70,9 @@ const MuseumSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+},{
+  toJSON:{virtuals:true},
+  toObject:{virtuals:true}
 });
 
 //Create museum slug from the name
@@ -97,4 +100,18 @@ MuseumSchema.pre("save", async function (next) {
   next();
 });
 
+//Cascade delete expositions when museum is deleted
+MuseumSchema.pre("remove", async function(next){
+  console.log(`Expositions being removed from museum ${this._id}`)
+await this.model("Exposition").deleteMany({museum:this._id})
+next()
+})
+
+//virtuals - Reverse populate with virtuals
+MuseumSchema.virtual("expositions",{
+  ref:"Exposition",
+  localField:"_id",
+  foreignField:"museum",
+  justOne:false
+})
 module.exports = mongoose.model("Museum", MuseumSchema);
