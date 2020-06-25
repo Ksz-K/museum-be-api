@@ -1,3 +1,4 @@
+const path = require("path");
 const ErrorResponse = require("../utils/errorResponse");
 const asyncHandler = require("../middleware/async");
 const Museum = require("../models/Museum");
@@ -162,5 +163,61 @@ exports.getMuseumsInRadius = asyncHandler(async (req, res, next) => {
     success: true,
     count: museums.length,
     data: museums,
+  });
+});
+
+// @desc    Upload photo for museum
+// @route   PUT /api/v1/museums/:id/photo
+// @access  Private
+exports.museumPhotoUpload = asyncHandler(async (req, res, next) => {
+  const museum = await Museum.findById(req.params.id);
+
+  if (!museum) {
+    return next(
+      new ErrorResponse(
+        `Muzeum o ID ${req.params.id} nie zostało znalezione`,
+        404
+      )
+    );
+  }
+
+  if (!req.files) {
+    return next(new ErrorResponse(`Proszę dołączyć zdjęcie muzeum`, 400));
+  }
+
+  const file = req.files.file;
+
+  //Make sure the image is actual a photo
+  if (!file.mimetype.startsWith("image"))
+    return next(new ErrorResponse(`Proszę dołączyć zdjęcie muzeum`, 400));
+
+  //Make sure file size does not exceed a limit
+  if (file.size > process.env.MAX_FILE_UPLOAD) {
+    return next(
+      new ErrorResponse(
+        `Proszę dołączyć zdjęcie nie większe niż ${process.env.MAX_FILE_UPLOAD} bajtów`,
+        400
+      )
+    );
+  }
+
+  //Create custom filename
+  file.name = `photo_${museum._id}${path.parse(file.name).ext}`;
+  file.mv(`${process.env.FILE_UPLOAD_PATH}/${file.name}`, async (err) => {
+    if (err) {
+      console.error(err);
+      return next(
+        new ErrorResponse(`Wystąpił problem z załadowaniem pliku`, 500)
+      );
+    }
+
+    await Museum.findByIdAndUpdate(req.params.id, {
+      photo: file.name,
+    });
+
+    res.status(200).json({
+      success: true,
+      data: file.name,
+    });
   });
 });

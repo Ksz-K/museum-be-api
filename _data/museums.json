@@ -7,8 +7,7 @@
     "website": "https://www.muzeumsportu.waw.pl",
     "phone": "+48 22 56 03 786",
     "email": "muzsport@muzeumsportu.waw.pl",
-    "address": "Wybrzeże Gdyńskie 4 St., 01-531 Warszawa, Polska",
-    "averageRating": 2
+    "address": "Wybrzeże Gdyńskie 4 St., 01-531 Warszawa, Polska"
   },
   {
     "_id": "5d713a66ec8f2b88b8f830b8",
@@ -18,8 +17,7 @@
     "website": "https://muzeumptw.pl/",
     "phone": "+48 22 842 66 11",
     "email": "mptwfort@muzeumwp.pl",
-    "address": "Powsińska 13 St., 02-920 Warszawa, Polska",
-    "averageRating": 5
+    "address": "Powsińska 13 St., 02-920 Warszawa, Polska"
   },
   {
     "_id": "5d725a037b292f5f8ceff787",
@@ -29,8 +27,7 @@
     "website": "https://mnk.pl/",
     "phone": "+48 12 433 57 44",
     "email": "rezerwacja@mnk.pl",
-    "address": "Al. 3 Maja 1, 30-062 Kraków, Polska",
-    "averageRating": 2
+    "address": "Al. 3 Maja 1, 30-062 Kraków, Polska"
   },
   {
     "_id": "5d725a1b7b292f5f8ceff788",
@@ -40,7 +37,6 @@
     "website": "https://mnp.art.pl/",
     "phone": "+48 61 85 68 000",
     "email": "mnp@mnp.art.pl",
-    "address": "Aleje Marcinkowskiego 9,61-745 Poznań,Polska",
-    "averageRating": 4
+    "address": "Aleje Marcinkowskiego 9,61-745 Poznań,Polska"
   }
 ]

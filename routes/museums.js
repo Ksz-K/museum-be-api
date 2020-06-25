@@ -6,6 +6,7 @@ const {
   updateMuseum,
   deleteMuseum,
   getMuseumsInRadius,
+  museumPhotoUpload,
 } = require("../controllers/museums");
 
 //Include other resource routers
@@ -17,6 +18,8 @@ const router = express.Router();
 router.use("/:museumId/expositions", expositionRouter);
 
 router.route("/radius/:coordinates/:distance").get(getMuseumsInRadius);
+
+router.route("/:id/photo").put(museumPhotoUpload);
 
 router.route("/").get(getMuseums).post(createMuseum);
 
