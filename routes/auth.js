@@ -1,5 +1,5 @@
 const express = require("express");
-const { register } = require("../controllers/auth");
+const { register, login } = require("../controllers/auth");
 
 const User = require("../models/User");
 const advancedResults = require("../middleware/advancedResults");
@@ -7,5 +7,6 @@ const advancedResults = require("../middleware/advancedResults");
 const router = express.Router({ mergeParams: true });
 
 router.post("/register", register);
+router.post("/login", login);
 
 module.exports = router;
