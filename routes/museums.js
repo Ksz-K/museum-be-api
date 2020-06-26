@@ -17,18 +17,27 @@ const expositionRouter = require("./expositions");
 
 const router = express.Router();
 
+//Middleware for protecting some routes (private ones)
+const { protect, authorize } = require("../middleware/auth");
+
 //Re-route into other resource routers
 router.use("/:museumId/expositions", expositionRouter);
 
 router.route("/radius/:coordinates/:distance").get(getMuseumsInRadius);
 
-router.route("/:id/photo").put(museumPhotoUpload);
+router
+  .route("/:id/photo")
+  .put(protect, authorize("publisher", "admin"), museumPhotoUpload);
 
 router
   .route("/")
   .get(advancedResults(Museum, "expositions"), getMuseums)
-  .post(createMuseum);
+  .post(protect, authorize("publisher", "admin"), createMuseum);
 
-router.route("/:id").get(getMuseum).put(updateMuseum).delete(deleteMuseum);
+router
+  .route("/:id")
+  .get(getMuseum)
+  .put(protect, authorize("publisher", "admin"), updateMuseum)
+  .delete(protect, authorize("publisher", "admin"), deleteMuseum);
 
 module.exports = router;

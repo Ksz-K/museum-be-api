@@ -30,6 +30,22 @@ exports.getMuseum = asyncHandler(async (req, res, next) => {
 // @route   POST /api/v1/museums/
 // @access  Private
 exports.createMuseum = asyncHandler(async (req, res, next) => {
+  //Add user to req.body
+  req.body.user = req.user;
+
+  //Check for published museums
+  const publishedMuseum = await Museum.findOne({ user: req.user.id });
+
+  //If user is not an admin the maximum bootcamps allowed to create is 1
+  if (!publishedMuseum.bootcamp && req.user.role != "admin") {
+    return next(
+      new ErrorResponse(
+        `Użytkownik o ID ${req.user.id} posiada już swoje Muzeum.`,
+        400
+      )
+    );
+  }
+
   const museum = await Museum.create(req.body);
   res.status(201).json({ success: true, data: museum });
 });
