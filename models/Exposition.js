@@ -19,6 +19,11 @@ const ExpositionSchema = new mongoose.Schema({
     ref: "Museum",
     required: true,
   },
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: "User",
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Exposition", ExpositionSchema);

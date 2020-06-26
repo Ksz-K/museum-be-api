@@ -47,6 +47,7 @@ exports.getExposition = asyncHandler(async (req, res, next) => {
 // @access  Private
 
 exports.addExposition = asyncHandler(async (req, res, next) => {
+  req.body.user = req.user.id;
   req.body.museum = req.params.museumId;
 
   const museum = await Museum.findById(req.params.museumId);
@@ -56,6 +57,16 @@ exports.addExposition = asyncHandler(async (req, res, next) => {
       new ErrorResponse(
         `Muzeum o numerze ID ${req.params.museumId} nie istnieje`,
         404
+      )
+    );
+  }
+
+  //Make sure current user is museum-owner
+  if (museum.user.toString() !== req.user.id && req.user.role !== "admin") {
+    return next(
+      new ErrorResponse(
+        `Użytkownik o ID ${req.user.id} nie posiada uprawnień do zmiany danych Muzeum ${req.params.museumId}`,
+        401
       )
     );
   }
@@ -83,6 +94,17 @@ exports.updateExposition = asyncHandler(async (req, res, next) => {
       )
     );
   }
+
+  //Make sure current user is exposition-owner
+  if (exposition.user.toString() !== req.user.id && req.user.role !== "admin") {
+    return next(
+      new ErrorResponse(
+        `Użytkownik o ID ${req.user.id} nie posiada uprawnień do zmiany danych Wystawy ${req.params.id}`,
+        401
+      )
+    );
+  }
+
   exposition = await Exposition.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
@@ -106,6 +128,15 @@ exports.deleteExposition = asyncHandler(async (req, res, next) => {
       new ErrorResponse(
         `Wystawa o numerze ID ${req.params.museumId} nie istnieje`,
         404
+      )
+    );
+  }
+  //Make sure current user is exposition-owner
+  if (exposition.user.toString() !== req.user.id && req.user.role !== "admin") {
+    return next(
+      new ErrorResponse(
+        `Użytkownik o ID ${req.user.id} nie posiada uprawnień do zmiany danych Wystawy ${req.params.id}`,
+        401
       )
     );
   }

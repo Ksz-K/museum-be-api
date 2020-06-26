@@ -28,7 +28,7 @@ const expositions = JSON.parse(
   fs.readFileSync(`${__dirname}/_data/expositions.json`, "utf-8")
 );
 
-const expositions = JSON.parse(
+const users = JSON.parse(
   fs.readFileSync(`${__dirname}/_data/users.json`, "utf-8")
 );
 

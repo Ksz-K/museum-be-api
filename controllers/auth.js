@@ -1,5 +1,6 @@
 const ErrorResponse = require("../utils/errorResponse");
 const asyncHandler = require("../middleware/async");
+const sendEmail = require("../utils/sendEmail");
 const User = require("../models/User");
 
 // @desc    Register user
@@ -58,6 +59,59 @@ exports.login = asyncHandler(async (req, res, next) => {
   sendTokenResponse(user, 200, res);
 });
 
+// @desc    Get current logged in user
+// @route   POST /api/v1/auth/me
+// @access  Private
+exports.getMe = asyncHandler(async (req, res, next) => {
+  const user = await User.findById(req.user.id);
+  res.status(200).json({
+    succes: true,
+    data: user,
+  });
+});
+
+// @desc    Forgot password
+// @route   POST /api/v1/auth/forgotpassword
+// @access  Public
+exports.forgotPassword = asyncHandler(async (req, res, next) => {
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) {
+    return next(new ErrorResponse("Błędny email", 404));
+  }
+
+  //Get reset token
+  const resetToken = user.getResetPasswordToken();
+
+  await user.save({ validateBeforeSave: false });
+
+  //Create rest url
+  const resetUrl = `${req.protocol}://${req.get(
+    "host"
+  )}/api/v1/resetPassword/${resetToken}`;
+
+  const message = `Aby zresetować hasło należy użyć załączony link ${resetUrl} //wymagany jest PUT request// `;
+
+  try {
+    await sendEmail({
+      email: user.email,
+      subject: "Link do zresetowania hasła",
+      message,
+    });
+    res.status(200).json({
+      succes: true,
+      msg: "Wysłano e-mail z linkiem do resetu hasła",
+    });
+  } catch (err) {}
+  console.err(err);
+  (user.getResetPasswordToken = undefined),
+    (user.resetPasswordExpire = undefined);
+
+  await user.save({ validateBeforeSave: false });
+  return next(
+    new ErrorResponse("Wystąpił problem z wysłaniem linku do resetu hasła", 500)
+  );
+});
+
 //Get token from model, create cookie and send response
 const sendTokenResponse = (user, statusCode, res) => {
   //Create token
@@ -78,14 +132,3 @@ const sendTokenResponse = (user, statusCode, res) => {
     .cookie("token", token, options)
     .json({ success: true, token });
 };
-
-// @desc    Get current logged in user
-// @route   POST /api/v1/auth/me
-// @access  Private
-exports.getMe = asyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.user.id);
-  res.status(200).json({
-    succes: true,
-    data: user,
-  });
-});

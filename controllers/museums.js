@@ -37,7 +37,7 @@ exports.createMuseum = asyncHandler(async (req, res, next) => {
   const publishedMuseum = await Museum.findOne({ user: req.user.id });
 
   //If user is not an admin the maximum bootcamps allowed to create is 1
-  if (!publishedMuseum.bootcamp && req.user.role != "admin") {
+  if (publishedMuseum && req.user.role !== "admin") {
     return next(
       new ErrorResponse(
         `Użytkownik o ID ${req.user.id} posiada już swoje Muzeum.`,
@@ -54,10 +54,7 @@ exports.createMuseum = asyncHandler(async (req, res, next) => {
 // @route   PUT /api/v1/museums/:id
 // @access  Private
 exports.updateMuseum = asyncHandler(async (req, res, next) => {
-  const museum = await Museum.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+  let museum = await Museum.findById(req.params.id);
 
   if (!museum) {
     return next(
@@ -67,6 +64,21 @@ exports.updateMuseum = asyncHandler(async (req, res, next) => {
       )
     );
   }
+
+  //Make sure current user is museum-owner
+  if (museum.user.toString() !== req.user.id && req.user.role !== "admin") {
+    return next(
+      new ErrorResponse(
+        `Użytkownik o ID ${req.user.id} nie posiada uprawnień do zmiany danych Muzeum ${req.params.id}`,
+        401
+      )
+    );
+  }
+
+  museum = await Museum.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
 
   res.status(200).json({ success: true, data: museum });
 });
@@ -75,7 +87,7 @@ exports.updateMuseum = asyncHandler(async (req, res, next) => {
 // @route   DELETE /api/v1/museums/:id
 // @access  Private
 exports.deleteMuseum = asyncHandler(async (req, res, next) => {
-  const museum = await Museum.findById(req.params.id);
+  let museum = await Museum.findById(req.params.id);
 
   if (!museum) {
     return next(
@@ -85,6 +97,17 @@ exports.deleteMuseum = asyncHandler(async (req, res, next) => {
       )
     );
   }
+
+  //Make sure current user is museum-owner
+  if (museum.user.toString() !== req.user.id && req.user.role !== "admin") {
+    return next(
+      new ErrorResponse(
+        `Użytkownik o ID ${req.user.id} nie posiada uprawnień do zmiany danych Muzeum ${req.params.id}`,
+        401
+      )
+    );
+  }
+
   museum.remove();
   res.status(200).json({ success: true, data: museum });
 });
@@ -127,6 +150,16 @@ exports.museumPhotoUpload = asyncHandler(async (req, res, next) => {
       new ErrorResponse(
         `Muzeum o ID ${req.params.id} nie zostało znalezione`,
         404
+      )
+    );
+  }
+
+  //Make sure current user is museum-owner
+  if (museum.user.toString() !== req.user.id && req.user.role !== "admin") {
+    return next(
+      new ErrorResponse(
+        `Użytkownik o ID ${req.user.id} nie posiada uprawnień do zmiany danych Muzeum ${req.params.id}`,
+        401
       )
     );
   }
