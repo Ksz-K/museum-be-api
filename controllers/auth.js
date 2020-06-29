@@ -94,6 +94,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
   try {
     await sendEmail({
       email: user.email,
+      name: user.name,
       subject: "Link do zresetowania hasła",
       message,
     });
@@ -101,15 +102,19 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
       succes: true,
       msg: "Wysłano e-mail z linkiem do resetu hasła",
     });
-  } catch (err) {}
-  console.err(err);
-  (user.getResetPasswordToken = undefined),
-    (user.resetPasswordExpire = undefined);
+  } catch (err) {
+    console.error(err);
+    (user.getResetPasswordToken = undefined),
+      (user.resetPasswordExpire = undefined);
 
-  await user.save({ validateBeforeSave: false });
-  return next(
-    new ErrorResponse("Wystąpił problem z wysłaniem linku do resetu hasła", 500)
-  );
+    await user.save({ validateBeforeSave: false });
+    return next(
+      new ErrorResponse(
+        "Wystąpił problem z wysłaniem linku do resetu hasła",
+        500
+      )
+    );
+  }
 });
 
 //Get token from model, create cookie and send response
