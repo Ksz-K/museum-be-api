@@ -18,6 +18,7 @@ connectDB();
 const museums = require("./routes/museums");
 const expositions = require("./routes/expositions");
 const auth = require("./routes/auth");
+const users = require("./routes/users");
 
 const app = express();
 
@@ -42,6 +43,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/api/v1/museums", museums);
 app.use("/api/v1/expositions", expositions);
 app.use("/api/v1/auth", auth);
+app.use("/api/v1/users", users);
 
 app.use(errorHandler);
 
