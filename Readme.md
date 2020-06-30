@@ -1,6 +1,6 @@
 # Museum Catalogue API
 
-> Backend API for Museum Catalogueapplication.
+> Backend API for Museum Catalogue application.
 
 ## Usage
 
