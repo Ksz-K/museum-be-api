@@ -26,7 +26,7 @@ npm start
 
 The API is live at [Muzeum Katalog](https://museum-be-api.herokuapp.com/)
 
-Extensive documentation with examples [here](https://documenter.getpostman.com/view/)
+Extensive documentation with examples [here](https://documenter.getpostman.com/view/9568011/T17CEVu4?version=latest)
 
 - Version: 1.0.0
 - License: MIT
