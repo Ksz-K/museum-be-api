@@ -1,6 +1,6 @@
-# StartNet API
+# Museum Catalogue API
 
-> Backend API for StartNet application, which is a web developer social network application
+> Backend API for Museum Catalogueapplication.
 
 ## Usage
 
