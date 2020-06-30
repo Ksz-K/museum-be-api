@@ -14,6 +14,7 @@ const advancedResults = require("../middleware/advancedResults");
 
 //Include other resource routers
 const expositionRouter = require("./expositions");
+const reviewRouter = require("./reviews");
 
 const router = express.Router();
 
@@ -22,6 +23,7 @@ const { protect, authorize } = require("../middleware/auth");
 
 //Re-route into other resource routers
 router.use("/:museumId/expositions", expositionRouter);
+router.use("/:museumId/reviews", reviewRouter);
 
 router.route("/radius/:coordinates/:distance").get(getMuseumsInRadius);
 

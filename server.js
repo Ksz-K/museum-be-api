@@ -19,6 +19,7 @@ const museums = require("./routes/museums");
 const expositions = require("./routes/expositions");
 const auth = require("./routes/auth");
 const users = require("./routes/users");
+const reviews = require("./routes/reviews");
 
 const app = express();
 
@@ -44,6 +45,7 @@ app.use("/api/v1/museums", museums);
 app.use("/api/v1/expositions", expositions);
 app.use("/api/v1/auth", auth);
 app.use("/api/v1/users", users);
+app.use("/api/v1/reviews", reviews);
 
 app.use(errorHandler);
 
