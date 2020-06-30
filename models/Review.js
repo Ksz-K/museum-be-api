@@ -33,4 +33,39 @@ const ReviewSchema = new mongoose.Schema({
   },
 });
 
+//Prevent user from submitting more than one review per museum
+ReviewSchema.index({ museum: 1, user: 1 }, { unique: true });
+
+//Static method to get average rating of the museum
+ReviewSchema.statics.getAverageRating = async function (museumId) {
+  const obj = await this.aggregate([
+    {
+      $match: { museum: museumId },
+    },
+    {
+      $group: {
+        _id: "$museum",
+        averageRating: { $avg: "$rating" },
+      },
+    },
+  ]);
+  try {
+    await this.model("Museum").findByIdAndUpdate(museumId, {
+      averageRating: obj[0].averageRating,
+    });
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+//Call getAverageRating after save
+ReviewSchema.post("save", function () {
+  this.constructor.getAverageRating(this.museum);
+});
+
+//Call getAverageRating before remove
+ReviewSchema.pre("remove", function () {
+  this.constructor.getAverageRating(this.museum);
+});
+
 module.exports = mongoose.model("Review", ReviewSchema);
